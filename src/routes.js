@@ -1,8 +1,15 @@
 const express = require('express');
-const UserController = require('./controllers/UserController')
+const authController = require('./controllers/AuthController');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 const routes = express.Router();
 
-routes.post('/users', UserController.store);
+routes.use('/users', authController);
+
+routes.use(authMiddleware);
+
+routes.get('/', (req, res) => {
+  return res.json({ ok: 'true' })
+});
 
 module.exports = routes;

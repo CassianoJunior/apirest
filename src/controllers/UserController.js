@@ -1,11 +1,16 @@
 const User = require('../models/User');
 
 module.exports = {
-  async store(req, res){
-    const { name, email, password } = req.body;
-
+  async store({ name, email, password }){
     const user = await User.create({ name, email, password});
 
-    return res.json(user);
+    return user;
+  },
+
+  async getOne(email){
+
+    const user = await User.findOne({ where: { email }});
+    
+    return user;
   }
 }
