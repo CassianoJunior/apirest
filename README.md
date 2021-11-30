@@ -2,7 +2,7 @@
 # apirest
 
 This is a project for my portfolio. <br>
-Description: A Rest API to control the login system of some application
+Description: A Rest API to control the login system of some application, with CRUD operations to handle simple projects, protected by the authentication system.
 
 ## 🛠 Technologies used
 
