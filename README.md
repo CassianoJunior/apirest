@@ -21,6 +21,7 @@ Description: A Rest API to control the login system of some application
   - `git clone https://github.com/CassianoJunior/apirest ./`
   - `npm i`
 - Modify the database file for your credentials on src/config/database.js
+- Create the database by running this command in the terminal `npx sequelize db:create`
 - Apply the migrations by placing the following command in the terminal: `npx sequelize db:migrate`
 - run on terminal `npm run dev`
 - Check the application routes and send requests for your preferred software, such as postman, insomnia or another.
