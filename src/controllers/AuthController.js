@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.json');
 
-const UserController = require('./UserController')
+const User = require('../models/User');
 
 const routes = express.Router();
 
@@ -15,15 +15,15 @@ function generateToken(params = {}){
 
 routes.post('/registration', async (req, res) => {
   try{
-    const existingUser = await UserController.getOne(req.body.email);
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ where: { email }});
 
     if(existingUser)
       return res.status(400).json({ error: 'User already exists' });
 
-    const { name, email, password } = req.body;
-    
     bcrypt.hash(password, 10, async (err, hash) => {
-      const user = await UserController.store({ name, email, password: hash }); 
+      const user = await User.create({ name, email, password: hash});
       err && console.log(err);
       user.password = undefined;
       res.status(201).json({
@@ -42,7 +42,7 @@ routes.post('/authenticate', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await UserController.getOne(email);
+    const user = await User.findOne({ where: { email }});
 
     if(!user)
       return res.status(400).json({ error: 'User not found' });
